@@ -39,9 +39,9 @@
     --font-heading: 'DM Serif Display', serif;
     --font-body: 'Montserrat', sans-serif;
 
-    --hero-overlay: linear-gradient(90deg, hsla(0, 0%, 6%, 0.78) 0%, hsla(0, 0%, 8%, 0.62) 42%, hsla(0, 0%, 8%, 0.28) 100%);
-    --hero-soft-light: radial-gradient(circle at 82% 18%, hsla(var(--background), 0.18) 0%, transparent 34%);
-    --hero-bottom-fade: linear-gradient(180deg, transparent 0%, hsl(var(--background)) 100%);
+    --hero-overlay: hsla(0, 0%, 0%, 0.35);
+    --hero-soft-light: none;
+    --hero-bottom-fade: none;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
