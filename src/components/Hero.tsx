@@ -150,24 +150,62 @@ const Hero = () => {
                     var h = document.body.scrollHeight;
                     window.parent.postMessage({ type: 'resize-iframe', height: h }, '*');
                   }
+                  
+                  function addLabels() {
+                    var inputs = document.querySelectorAll('input, select');
+                    inputs.forEach(function(input) {
+                      if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') return;
+                      var parent = input.parentElement;
+                      if (!parent) return;
+                      // Check if label already exists in parent
+                      if (parent.querySelector('label')) return;
+                      var label = document.createElement('label');
+                      var ph = input.getAttribute('placeholder') || input.getAttribute('name') || '';
+                      if (ph.toLowerCase().includes('check in') || ph.toLowerCase().includes('checkin')) {
+                        label.textContent = 'Check In';
+                      } else if (ph.toLowerCase().includes('check out') || ph.toLowerCase().includes('checkout')) {
+                        label.textContent = 'Check Out';
+                      } else if (ph.toLowerCase().includes('promo')) {
+                        label.textContent = 'Promo Code';
+                      } else {
+                        label.textContent = ph;
+                      }
+                      if (label.textContent) {
+                        parent.insertBefore(label, parent.firstChild);
+                      }
+                    });
+                  }
+                  
                   var observer = new MutationObserver(function() {
                     document.querySelectorAll('button, .btn, [type=submit], a.btn').forEach(function(el) {
                       el.style.setProperty('background-color', '#fb7a10', 'important');
                       el.style.setProperty('background', '#fb7a10', 'important');
                     });
-                    document.querySelectorAll('label').forEach(function(el) {
-                      el.style.setProperty('display', 'block', 'important');
-                      el.style.setProperty('margin-bottom', '6px', 'important');
-                    });
+                    addLabels();
                     resizeToParent();
                   });
                   observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-                  window.addEventListener('load', function() { setTimeout(resizeToParent, 500); });
-                  // Also resize on click (for calendar open)
-                  document.addEventListener('click', function() {
+                  window.addEventListener('load', function() { 
+                    setTimeout(function() { addLabels(); resizeToParent(); }, 500); 
+                    setTimeout(function() { addLabels(); resizeToParent(); }, 1000); 
+                  });
+                  document.addEventListener('click', function(e) {
+                    // When clicking date inputs, expand iframe for calendar
+                    var target = e.target;
+                    if (target.tagName === 'INPUT' && (target.placeholder || '').toLowerCase().includes('check')) {
+                      document.body.style.overflow = 'visible';
+                      window.parent.postMessage({ type: 'resize-iframe', height: 400 }, '*');
+                    }
                     setTimeout(resizeToParent, 100);
                     setTimeout(resizeToParent, 300);
                     setTimeout(resizeToParent, 600);
+                  });
+                  // Shrink back when clicking outside
+                  document.addEventListener('focusout', function() {
+                    setTimeout(function() {
+                      document.body.style.overflow = 'hidden';
+                      resizeToParent();
+                    }, 200);
                   });
                 <\/script>
               </body>
