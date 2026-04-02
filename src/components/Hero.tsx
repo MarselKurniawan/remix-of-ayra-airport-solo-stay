@@ -38,7 +38,7 @@ const Hero = () => {
 
       {/* Booking Widget - Book and Link (isolated in iframe) */}
       <div className="relative z-10 container mx-auto px-4 pb-16">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl bg-foreground/50 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl overflow-hidden">
           <iframe
             srcDoc={`
               <!DOCTYPE html>
