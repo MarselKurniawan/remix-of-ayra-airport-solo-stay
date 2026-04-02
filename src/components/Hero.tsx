@@ -66,7 +66,7 @@ const Hero = () => {
                   html, body { 
                     font-family: 'Montserrat', sans-serif !important; 
                     background: #ffffff !important;
-                    padding: 20px 28px;
+                    padding: 14px 28px;
                     overflow: hidden;
                   }
                   
