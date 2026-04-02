@@ -67,7 +67,8 @@ const Hero = () => {
                     font-family: 'Montserrat', sans-serif !important; 
                     background: #ffffff !important;
                     padding: 20px 28px;
-                    overflow: hidden;
+                    overflow-x: hidden;
+                    overflow-y: auto;
                   }
                   
                   #bnl-widget-formular, #bnl-widget-formular * {
