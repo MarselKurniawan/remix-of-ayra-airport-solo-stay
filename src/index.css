@@ -98,6 +98,14 @@
   }
 }
 
+/* Protect navbar from external widget styles */
+nav.fixed a,
+nav.fixed button,
+nav.fixed > div > div {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 /* Book and Link Widget Styling */
 .booking-widget-wrapper * {
   font-family: 'Montserrat', sans-serif !important;
