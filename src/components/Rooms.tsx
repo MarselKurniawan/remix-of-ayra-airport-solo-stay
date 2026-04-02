@@ -1,12 +1,20 @@
+import { useState } from "react";
 import roomDeluxe from "@/assets/room-deluxe.jpg";
+import roomDeluxe2 from "@/assets/room-deluxe-2.jpg";
+import roomDeluxe3 from "@/assets/room-deluxe-3.jpg";
 import roomSuperior from "@/assets/room-superior.jpg";
+import roomSuperior2 from "@/assets/room-superior-2.jpg";
+import roomSuperior3 from "@/assets/room-superior-3.jpg";
 import roomSuite from "@/assets/room-suite.jpg";
-import { Bed, Users, Maximize, ArrowRight } from "lucide-react";
+import roomSuite2 from "@/assets/room-suite-2.jpg";
+import roomSuite3 from "@/assets/room-suite-3.jpg";
+import { Bed, Users, Maximize, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const rooms = [
   {
     name: "Superior Room",
-    image: roomSuperior,
+    images: [roomSuperior, roomSuperior2, roomSuperior3],
     price: "Rp 450.000",
     bed: "Twin Bed",
     guest: "2 Tamu",
@@ -16,7 +24,7 @@ const rooms = [
   },
   {
     name: "Deluxe Room",
-    image: roomDeluxe,
+    images: [roomDeluxe, roomDeluxe2, roomDeluxe3],
     price: "Rp 650.000",
     bed: "King Bed",
     guest: "2 Tamu",
@@ -26,7 +34,7 @@ const rooms = [
   },
   {
     name: "Executive Suite",
-    image: roomSuite,
+    images: [roomSuite, roomSuite2, roomSuite3],
     price: "Rp 950.000",
     bed: "King Bed",
     guest: "2 Tamu",
@@ -35,6 +43,71 @@ const rooms = [
     amenities: ["AC", "TV LED 55\"", "WiFi", "Bathtub", "Mini Bar", "Living Area"],
   },
 ];
+
+const RoomImageSlider = ({ images, name }: { images: string[]; name: string }) => {
+  const [current, setCurrent] = useState(0);
+
+  const next = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrent((prev) => (prev + 1) % images.length);
+  };
+  const prev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrent((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  return (
+    <div className="relative overflow-hidden h-56 group/slider">
+      {images.map((img, i) => (
+        <img
+          key={i}
+          src={img}
+          alt={`${name} ${i + 1}`}
+          loading="lazy"
+          width={800}
+          height={600}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover transition-opacity duration-500",
+            i === current ? "opacity-100" : "opacity-0"
+          )}
+        />
+      ))}
+
+      {/* Nav arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center text-foreground opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-card"
+        aria-label="Previous image"
+      >
+        <ChevronLeft size={16} />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center text-foreground opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-card"
+        aria-label="Next image"
+      >
+        <ChevronRight size={16} />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
+            className={cn(
+              "rounded-full transition-all",
+              i === current
+                ? "w-5 h-1.5 bg-primary-foreground"
+                : "w-1.5 h-1.5 bg-primary-foreground/50"
+            )}
+            aria-label={`Image ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const Rooms = () => {
   return (
@@ -54,26 +127,21 @@ const Rooms = () => {
           {rooms.map((room) => (
             <div
               key={room.name}
-              className="bg-card rounded-xl overflow-hidden border border-border group hover:shadow-xl transition-all duration-300"
+              className="bg-card rounded-xl overflow-hidden border border-border hover:shadow-xl transition-all duration-300"
             >
-              {/* Image */}
-              <div className="relative overflow-hidden h-56">
-                <img
-                  src={room.image}
-                  alt={room.name}
-                  loading="lazy"
-                  width={800}
-                  height={600}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
+              {/* Image Slider */}
+              <RoomImageSlider images={room.images} name={room.name} />
+
+              {/* Price badge */}
+              <div className="relative">
+                <div className="absolute -top-5 right-4 bg-card border border-border rounded-lg px-3 py-1.5 shadow-md">
                   <span className="font-body text-sm font-bold text-foreground">{room.price}</span>
                   <span className="font-body text-xs text-muted-foreground">/malam</span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="p-6 pt-4">
                 <h3 className="font-heading text-xl text-foreground mb-2">{room.name}</h3>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">{room.desc}</p>
 
