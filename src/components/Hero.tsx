@@ -36,10 +36,8 @@ const Hero = () => {
       />
       <div className="absolute inset-0 bg-foreground/40" />
 
-      {/* Top bar — logo */}
-      <div className="relative z-10 container mx-auto px-4 pt-24">
-        <img src={logoWhite} alt="Ayra Airport Hotel Solo" className="h-8 md:h-10 opacity-90" />
-      </div>
+      {/* Spacer for navbar */}
+      <div className="relative z-10 pt-24" />
 
       {/* Center content */}
       <div className="relative z-10 flex-1 flex items-center">
