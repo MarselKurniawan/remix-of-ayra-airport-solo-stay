@@ -104,12 +104,12 @@ const Testimonials = () => {
         >
           <div
             className="flex gap-5 transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${current * (100 / 3 + 1.25)}%)` }}
+            style={{ transform: `translateX(-${current * (100 / 3)}%)` }}
           >
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="min-w-[calc(33.333%-14px)] flex-shrink-0 hidden md:block"
+                className="min-w-[calc(33.333%-14px)] w-[calc(33.333%-14px)] flex-shrink-0 hidden md:block"
               >
                 <div className="bg-card border border-border rounded-xl p-6 h-full flex flex-col hover:shadow-lg transition-shadow">
                   <div className="flex items-center gap-1 mb-4">
