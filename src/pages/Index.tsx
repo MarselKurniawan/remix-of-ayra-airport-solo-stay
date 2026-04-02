@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Rooms from "@/components/Rooms";
+import Gallery from "@/components/Gallery";
 import Facilities from "@/components/Facilities";
 import Nearby from "@/components/Nearby";
 import Testimonials from "@/components/Testimonials";
@@ -14,6 +15,7 @@ const Index = () => {
       <Hero />
       <About />
       <Rooms />
+      <Gallery />
       <Facilities />
       <Nearby />
       <Testimonials />
