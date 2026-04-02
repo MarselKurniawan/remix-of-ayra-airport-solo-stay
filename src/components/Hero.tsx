@@ -1,7 +1,20 @@
+import { useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
 
 const Hero = () => {
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data?.type === 'resize-iframe') {
+        const iframe = document.getElementById('booking-iframe') as HTMLIFrameElement;
+        if (iframe) {
+          iframe.style.height = Math.max(120, e.data.height + 10) + 'px';
+        }
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
   return (
     <section id="hero" className="relative h-screen flex flex-col">
       {/* Background image */}
