@@ -1,9 +1,17 @@
 import logoWhite from "@/assets/logo-white.png";
-import { MapPin, Phone, Mail, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const links = [
     { label: "Beranda", href: "#hero" },
@@ -16,8 +24,15 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-foreground/90 backdrop-blur-md">
-      <div className="container mx-auto flex items-center justify-between py-3 px-4">
+    <nav
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        scrolled
+          ? "bg-foreground/90 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+      )}
+    >
+      <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <a href="#hero">
           <img src={logoWhite} alt="Ayra Airport Hotel Solo" className="h-10" />
         </a>
