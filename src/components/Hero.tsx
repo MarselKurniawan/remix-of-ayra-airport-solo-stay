@@ -38,7 +38,7 @@ const Hero = () => {
 
       {/* Booking Widget - Book and Link (isolated in iframe) */}
       <div className="relative z-10 container mx-auto px-4 pb-16">
-        <div className="max-w-4xl bg-foreground/50 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+        <div className="max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
           <iframe
             srcDoc={`
               <!DOCTYPE html>
@@ -51,13 +51,13 @@ const Hero = () => {
                   * { margin: 0; padding: 0; box-sizing: border-box; }
                   html, body { 
                     font-family: 'Montserrat', sans-serif !important; 
-                    background: transparent !important;
-                    padding: 20px 24px;
+                    background: #ffffff !important;
+                    padding: 16px 24px;
                     overflow: hidden;
                   }
                   
                   #bnl-widget-formular, #bnl-widget-formular * {
-                    background: transparent !important;
+                    font-family: 'Montserrat', sans-serif !important;
                   }
                   #bnl-widget-formular {
                     display: flex !important;
@@ -86,21 +86,21 @@ const Hero = () => {
                     border-radius: 8px !important;
                     font-family: 'Montserrat', sans-serif !important;
                     font-size: 13px !important;
-                    border: 1px solid rgba(255,255,255,0.3) !important;
-                    background: rgba(255,255,255,0.1) !important;
-                    color: #fff !important;
+                    border: 1px solid #e0e0e0 !important;
+                    background: #f9f9f9 !important;
+                    color: #333 !important;
                     padding: 10px 14px !important;
                   }
-                  input::placeholder { color: rgba(255,255,255,0.5) !important; }
+                  input::placeholder { color: #999 !important; }
                   label {
                     font-family: 'Montserrat', sans-serif !important;
                     font-size: 11px !important;
                     font-weight: 600 !important;
                     text-transform: uppercase !important;
                     letter-spacing: 0.08em !important;
-                    color: rgba(255,255,255,0.7) !important;
+                    color: #666 !important;
                   }
-                  select option { background: #1a1a1a !important; color: #fff !important; }
+                  select option { background: #fff !important; color: #333 !important; }
                   .form-group, .form-control, .input-group, div, span, form, fieldset {
                     background: transparent !important;
                   }
@@ -110,21 +110,10 @@ const Hero = () => {
                 <div id="bnl-widget-formular" pid="PROPDE_01KG1JF9WSHBB920MFQJ8WC346" data-url="https://booking.sinergimax.com/widget" data-style="{'btnText':'Book Now'}"></div>
                 <script src="https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js"><\/script>
                 <script>
-                  // Force transparent background after widget loads
                   var observer = new MutationObserver(function() {
-                    document.querySelectorAll('div, span, form, fieldset, table, tr, td, th, thead, tbody, p, section, header, footer, nav, main, article, aside, ul, ol, li, dl, dt, dd').forEach(function(el) {
-                      if (!el.matches('button, .btn, [type=submit], a.btn, input, select')) {
-                        el.style.setProperty('background-color', 'transparent', 'important');
-                        el.style.setProperty('background', 'transparent', 'important');
-                      }
-                    });
                     document.querySelectorAll('button, .btn, [type=submit], a.btn').forEach(function(el) {
                       el.style.setProperty('background-color', '#fb7a10', 'important');
                       el.style.setProperty('background', '#fb7a10', 'important');
-                    });
-                    document.querySelectorAll('input, select').forEach(function(el) {
-                      el.style.setProperty('background-color', 'rgba(255,255,255,0.1)', 'important');
-                      el.style.setProperty('background', 'rgba(255,255,255,0.1)', 'important');
                     });
                   });
                   observer.observe(document.body, { childList: true, subtree: true });
@@ -136,7 +125,6 @@ const Hero = () => {
             style={{ height: "100px", minHeight: "100px" }}
             title="Booking Widget"
             loading="eager"
-            allowTransparency={true as any}
           />
         </div>
       </div>

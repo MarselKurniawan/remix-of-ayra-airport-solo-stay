@@ -6,6 +6,7 @@ import Gallery from "@/components/Gallery";
 import Facilities from "@/components/Facilities";
 import Nearby from "@/components/Nearby";
 import Testimonials from "@/components/Testimonials";
+import PromoBanner from "@/components/PromoBanner";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
       <Facilities />
       <Nearby />
       <Testimonials />
+      <PromoBanner />
       <Footer />
     </div>
   );
