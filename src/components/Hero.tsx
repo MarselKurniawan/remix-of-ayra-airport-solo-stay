@@ -51,8 +51,7 @@ const Hero = () => {
                   * { margin: 0; padding: 0; box-sizing: border-box; }
                   body { 
                     font-family: 'Montserrat', sans-serif; 
-                    background: rgba(15,15,15,0.65);
-                    border-radius: 12px;
+                    background: transparent;
                     padding: 20px 24px;
                   }
                   
