@@ -1,4 +1,6 @@
-import { Star, Quote } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
@@ -28,6 +30,23 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % testimonials.length);
+  }, []);
+
+  const prev = useCallback(() => {
+    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  }, []);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused, next]);
+
   return (
     <section id="testimonials" className="py-20 md:py-28 bg-foreground">
       <div className="container mx-auto px-4">
@@ -40,28 +59,80 @@ const Testimonials = () => {
             Pengalaman nyata dari tamu yang telah menginap di Ayra Airport Hotel Solo.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {testimonials.map((t, i) => (
-            <div key={i} className="bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-lg p-6 relative">
-              <Quote className="text-primary/30 absolute top-4 right-4" size={32} />
-              <div className="flex items-center gap-1 mb-3">
-                {[...Array(5)].map((_, j) => (
-                  <Star
-                    key={j}
-                    size={14}
-                    className={j < t.rating ? "fill-primary text-primary" : "text-primary-foreground/20"}
-                  />
-                ))}
+
+        {/* Carousel */}
+        <div
+          className="relative max-w-2xl mx-auto"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Card */}
+          <div className="overflow-hidden">
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "transition-all duration-500 ease-in-out",
+                  i === current
+                    ? "opacity-100 translate-x-0 block"
+                    : "opacity-0 translate-x-8 hidden"
+                )}
+              >
+                <div className="bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-lg p-8 md:p-10 relative text-center">
+                  <Quote className="text-primary/20 mx-auto mb-6" size={40} />
+                  <div className="flex items-center justify-center gap-1 mb-5">
+                    {[...Array(5)].map((_, j) => (
+                      <Star
+                        key={j}
+                        size={16}
+                        className={j < t.rating ? "fill-primary text-primary" : "text-primary-foreground/20"}
+                      />
+                    ))}
+                  </div>
+                  <p className="font-body text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8 italic">
+                    "{t.text}"
+                  </p>
+                  <div>
+                    <p className="font-heading text-xl text-primary-foreground">{t.name}</p>
+                    <p className="font-body text-sm text-primary-foreground/50 mt-1">{t.role}</p>
+                  </div>
+                </div>
               </div>
-              <p className="font-body text-sm text-primary-foreground/80 leading-relaxed mb-4 italic">
-                "{t.text}"
-              </p>
-              <div>
-                <p className="font-heading text-primary-foreground">{t.name}</p>
-                <p className="font-body text-xs text-primary-foreground/50">{t.role}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={prev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 w-10 h-10 rounded-full bg-primary-foreground/10 border border-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
+            aria-label="Previous"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 w-10 h-10 rounded-full bg-primary-foreground/10 border border-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
+            aria-label="Next"
+          >
+            <ChevronRight size={20} />
+          </button>
+
+          {/* Dots */}
+          <div className="flex items-center justify-center gap-2 mt-8">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={cn(
+                  "rounded-full transition-all duration-300",
+                  i === current
+                    ? "w-8 h-2 bg-primary"
+                    : "w-2 h-2 bg-primary-foreground/25 hover:bg-primary-foreground/40"
+                )}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
