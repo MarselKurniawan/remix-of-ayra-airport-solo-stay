@@ -152,28 +152,36 @@ const Hero = () => {
                   }
                   
                   function addLabels() {
-                    var inputs = document.querySelectorAll('input, select');
-                    inputs.forEach(function(input) {
-                      if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') return;
-                      var parent = input.parentElement;
-                      if (!parent) return;
-                      // Check if label already exists in parent
-                      if (parent.querySelector('label')) return;
-                      var label = document.createElement('label');
+                    // Find the top-level children of the widget (each field wrapper)
+                    var widget = document.getElementById('bnl-widget-formular');
+                    if (!widget) return;
+                    var children = widget.children;
+                    for (var i = 0; i < children.length; i++) {
+                      var child = children[i];
+                      // Skip if already has a label we added
+                      if (child.querySelector('.custom-label')) continue;
+                      if (child.tagName === 'BUTTON' || child.tagName === 'A') continue;
+                      
+                      var input = child.querySelector('input') || child.querySelector('select');
+                      if (!input) continue;
+                      
+                      var label = document.createElement('div');
+                      label.className = 'custom-label';
                       var ph = input.getAttribute('placeholder') || input.getAttribute('name') || '';
-                      if (ph.toLowerCase().includes('check in') || ph.toLowerCase().includes('checkin')) {
+                      if (ph.toLowerCase().includes('check in') || ph.toLowerCase().includes('checkin') || ph.toLowerCase().includes('arrival')) {
                         label.textContent = 'Check In';
-                      } else if (ph.toLowerCase().includes('check out') || ph.toLowerCase().includes('checkout')) {
+                      } else if (ph.toLowerCase().includes('check out') || ph.toLowerCase().includes('checkout') || ph.toLowerCase().includes('departure')) {
                         label.textContent = 'Check Out';
                       } else if (ph.toLowerCase().includes('promo')) {
                         label.textContent = 'Promo Code';
-                      } else {
+                      } else if (ph) {
                         label.textContent = ph;
                       }
                       if (label.textContent) {
-                        parent.insertBefore(label, parent.firstChild);
+                        label.style.cssText = 'font-family:Montserrat,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#999;margin-bottom:6px;display:block;';
+                        child.insertBefore(label, child.firstChild);
                       }
-                    });
+                    }
                   }
                   
                   var observer = new MutationObserver(function() {
