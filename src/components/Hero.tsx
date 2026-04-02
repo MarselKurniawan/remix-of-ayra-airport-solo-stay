@@ -38,8 +38,9 @@ const Hero = () => {
 
       {/* Booking Widget - Book and Link (isolated in iframe) */}
       <div className="relative z-10 container mx-auto px-4 pb-16">
-        <div className="max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
+        <div className="max-w-4xl bg-white rounded-xl shadow-2xl overflow-visible">
           <iframe
+            id="booking-iframe"
             srcDoc={`
               <!DOCTYPE html>
               <html>
@@ -52,8 +53,8 @@ const Hero = () => {
                   html, body { 
                     font-family: 'Montserrat', sans-serif !important; 
                     background: #ffffff !important;
-                    padding: 16px 24px;
-                    overflow: hidden;
+                    padding: 20px 24px;
+                    overflow: visible !important;
                   }
                   
                   #bnl-widget-formular, #bnl-widget-formular * {
@@ -61,8 +62,9 @@ const Hero = () => {
                   }
                   #bnl-widget-formular {
                     display: flex !important;
-                    align-items: center !important;
-                    gap: 12px !important;
+                    align-items: flex-end !important;
+                    gap: 16px !important;
+                    flex-wrap: wrap !important;
                   }
 
                   button, .btn, [type="submit"], a.btn {
@@ -90,19 +92,30 @@ const Hero = () => {
                     background: #f9f9f9 !important;
                     color: #333 !important;
                     padding: 10px 14px !important;
+                    width: 100% !important;
                   }
                   input::placeholder { color: #999 !important; }
                   label {
                     font-family: 'Montserrat', sans-serif !important;
-                    font-size: 11px !important;
+                    font-size: 10px !important;
                     font-weight: 600 !important;
                     text-transform: uppercase !important;
-                    letter-spacing: 0.08em !important;
-                    color: #666 !important;
+                    letter-spacing: 0.1em !important;
+                    color: #888 !important;
+                    display: block !important;
+                    margin-bottom: 6px !important;
                   }
                   select option { background: #fff !important; color: #333 !important; }
                   .form-group, .form-control, .input-group, div, span, form, fieldset {
                     background: transparent !important;
+                  }
+                  /* Ensure datepicker popups are visible */
+                  .datepicker, .ui-datepicker, .calendar, [class*="calendar"], [class*="datepicker"], [class*="picker"] {
+                    z-index: 9999 !important;
+                    background: #fff !important;
+                    border: 1px solid #e0e0e0 !important;
+                    border-radius: 8px !important;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
                   }
                 </style>
               </head>
@@ -110,19 +123,37 @@ const Hero = () => {
                 <div id="bnl-widget-formular" pid="PROPDE_01KG1JF9WSHBB920MFQJ8WC346" data-url="https://booking.sinergimax.com/widget" data-style="{'btnText':'Book Now'}"></div>
                 <script src="https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js"><\/script>
                 <script>
+                  function resizeToParent() {
+                    var h = document.body.scrollHeight;
+                    window.parent.postMessage({ type: 'resize-iframe', height: h }, '*');
+                  }
                   var observer = new MutationObserver(function() {
                     document.querySelectorAll('button, .btn, [type=submit], a.btn').forEach(function(el) {
                       el.style.setProperty('background-color', '#fb7a10', 'important');
                       el.style.setProperty('background', '#fb7a10', 'important');
                     });
+                    // Make sure labels are visible
+                    document.querySelectorAll('label').forEach(function(el) {
+                      el.style.setProperty('display', 'block', 'important');
+                      el.style.setProperty('margin-bottom', '6px', 'important');
+                      el.style.setProperty('color', '#888', 'important');
+                    });
+                    resizeToParent();
                   });
-                  observer.observe(document.body, { childList: true, subtree: true });
+                  observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+                  window.addEventListener('load', function() { setTimeout(resizeToParent, 500); });
+                  // Also resize on click (for calendar open)
+                  document.addEventListener('click', function() {
+                    setTimeout(resizeToParent, 100);
+                    setTimeout(resizeToParent, 300);
+                    setTimeout(resizeToParent, 600);
+                  });
                 <\/script>
               </body>
               </html>
             `}
             className="w-full border-0"
-            style={{ height: "100px", minHeight: "100px" }}
+            style={{ height: "120px", minHeight: "120px", transition: "height 0.3s ease" }}
             title="Booking Widget"
             loading="eager"
           />
