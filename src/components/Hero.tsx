@@ -57,18 +57,19 @@ const Hero = () => {
                   
                   /* Override widget button styles */
                   button, .btn, [type="submit"], a.btn {
-                    background-color: #ff3702 !important;
-                    background: #ff3702 !important;
+                    background-color: #fb7a10 !important;
+                    background: #fb7a10 !important;
                     border: none !important;
                     border-radius: 0.5rem !important;
                     font-family: 'Montserrat', sans-serif !important;
                     font-weight: 600 !important;
                     color: #ffffff !important;
                     cursor: pointer !important;
+                    transition: background-color 0.2s !important;
                   }
                   button:hover, .btn:hover, [type="submit"]:hover, a.btn:hover {
-                    background-color: #ff6802 !important;
-                    background: #ff6802 !important;
+                    background-color: #e06d0e !important;
+                    background: #e06d0e !important;
                   }
                   input, select {
                     border-radius: 0.5rem !important;
