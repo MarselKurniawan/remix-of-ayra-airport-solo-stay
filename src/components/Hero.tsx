@@ -48,17 +48,21 @@ const Hero = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
                 <style>
-                  * { margin: 0; padding: 0; box-sizing: border-box; }
-                  body { 
-                    font-family: 'Montserrat', sans-serif; 
-                    background: transparent;
+                  * { margin: 0; padding: 0; box-sizing: border-box; background: transparent !important; }
+                  html, body { 
+                    font-family: 'Montserrat', sans-serif !important; 
+                    background: transparent !important;
                     padding: 20px 24px;
+                    overflow: hidden;
                   }
                   
+                  #bnl-widget-formular, #bnl-widget-formular * {
+                    background: transparent !important;
+                  }
                   #bnl-widget-formular {
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 12px !important;
                   }
 
                   button, .btn, [type="submit"], a.btn {
@@ -77,21 +81,17 @@ const Hero = () => {
                   }
                   button:hover, .btn:hover, [type="submit"]:hover, a.btn:hover {
                     background: #e06d0e !important;
-                    transform: translateY(-1px) !important;
-                    box-shadow: 0 4px 12px rgba(251,122,16,0.4) !important;
                   }
                   input, select {
                     border-radius: 8px !important;
                     font-family: 'Montserrat', sans-serif !important;
                     font-size: 13px !important;
-                    border: 1px solid rgba(255,255,255,0.25) !important;
+                    border: 1px solid rgba(255,255,255,0.3) !important;
                     background: rgba(255,255,255,0.1) !important;
                     color: #fff !important;
                     padding: 10px 14px !important;
                   }
-                  input::placeholder {
-                    color: rgba(255,255,255,0.5) !important;
-                  }
+                  input::placeholder { color: rgba(255,255,255,0.5) !important; }
                   label {
                     font-family: 'Montserrat', sans-serif !important;
                     font-size: 11px !important;
@@ -99,24 +99,39 @@ const Hero = () => {
                     text-transform: uppercase !important;
                     letter-spacing: 0.08em !important;
                     color: rgba(255,255,255,0.7) !important;
-                    margin-bottom: 4px !important;
                   }
-                  select option {
-                    background: #1a1a1a !important;
-                    color: #fff !important;
+                  select option { background: #1a1a1a !important; color: #fff !important; }
+                  .form-group, .form-control, .input-group, div, span, form, fieldset {
+                    background: transparent !important;
                   }
                 </style>
               </head>
               <body>
                 <div id="bnl-widget-formular" pid="PROPDE_01KG1JF9WSHBB920MFQJ8WC346" data-url="https://booking.sinergimax.com/widget" data-style="{'btnText':'Book Now'}"></div>
                 <script src="https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js"><\/script>
+                <script>
+                  // Force transparent background after widget loads
+                  var observer = new MutationObserver(function() {
+                    document.querySelectorAll('*').forEach(function(el) {
+                      el.style.backgroundColor = 'transparent';
+                    });
+                    document.querySelectorAll('button, .btn, [type=submit], a.btn').forEach(function(el) {
+                      el.style.backgroundColor = '#fb7a10';
+                    });
+                    document.querySelectorAll('input, select').forEach(function(el) {
+                      el.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    });
+                  });
+                  observer.observe(document.body, { childList: true, subtree: true });
+                <\/script>
               </body>
               </html>
             `}
-            className="w-full border-0 rounded-xl"
+            className="w-full border-0"
             style={{ height: "100px", minHeight: "100px" }}
             title="Booking Widget"
             loading="eager"
+            allowTransparency={true as any}
           />
         </div>
       </div>
