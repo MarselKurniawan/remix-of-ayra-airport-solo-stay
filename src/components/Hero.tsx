@@ -51,7 +51,7 @@ const Hero = () => {
 
       {/* Booking Widget - Book and Link (isolated in iframe) */}
       <div className="relative z-10 container mx-auto px-4 pb-16">
-        <div className="max-w-4xl bg-white rounded-xl shadow-2xl overflow-visible">
+        <div className="max-w-4xl bg-white rounded-xl shadow-2xl">
           <iframe
             id="booking-iframe"
             srcDoc={`
@@ -66,8 +66,8 @@ const Hero = () => {
                   html, body { 
                     font-family: 'Montserrat', sans-serif !important; 
                     background: #ffffff !important;
-                    padding: 20px 24px;
-                    overflow: visible !important;
+                    padding: 20px 28px;
+                    overflow: hidden;
                   }
                   
                   #bnl-widget-formular, #bnl-widget-formular * {
@@ -76,8 +76,12 @@ const Hero = () => {
                   #bnl-widget-formular {
                     display: flex !important;
                     align-items: flex-end !important;
-                    gap: 16px !important;
-                    flex-wrap: wrap !important;
+                    gap: 14px !important;
+                    flex-wrap: nowrap !important;
+                  }
+                  #bnl-widget-formular > div, #bnl-widget-formular > span, #bnl-widget-formular > fieldset {
+                    flex: 1 !important;
+                    min-width: 0 !important;
                   }
 
                   button, .btn, [type="submit"], a.btn {
@@ -86,35 +90,42 @@ const Hero = () => {
                     border-radius: 8px !important;
                     font-family: 'Montserrat', sans-serif !important;
                     font-weight: 600 !important;
-                    font-size: 14px !important;
+                    font-size: 13px !important;
                     color: #ffffff !important;
                     cursor: pointer !important;
-                    padding: 12px 28px !important;
+                    padding: 11px 24px !important;
                     transition: all 0.2s ease !important;
                     text-transform: uppercase !important;
                     letter-spacing: 0.05em !important;
+                    white-space: nowrap !important;
+                    flex-shrink: 0 !important;
                   }
                   button:hover, .btn:hover, [type="submit"]:hover, a.btn:hover {
                     background: #e06d0e !important;
                   }
                   input, select {
-                    border-radius: 8px !important;
+                    border-radius: 6px !important;
                     font-family: 'Montserrat', sans-serif !important;
                     font-size: 13px !important;
-                    border: 1px solid #e0e0e0 !important;
-                    background: #f9f9f9 !important;
+                    border: 1px solid #ddd !important;
+                    background: #f7f7f7 !important;
                     color: #333 !important;
-                    padding: 10px 14px !important;
+                    padding: 10px 12px !important;
                     width: 100% !important;
                   }
-                  input::placeholder { color: #999 !important; }
+                  input:focus, select:focus {
+                    outline: none !important;
+                    border-color: #fb7a10 !important;
+                    box-shadow: 0 0 0 2px rgba(251,122,16,0.15) !important;
+                  }
+                  input::placeholder { color: #aaa !important; }
                   label {
                     font-family: 'Montserrat', sans-serif !important;
                     font-size: 10px !important;
-                    font-weight: 600 !important;
+                    font-weight: 700 !important;
                     text-transform: uppercase !important;
                     letter-spacing: 0.1em !important;
-                    color: #888 !important;
+                    color: #999 !important;
                     display: block !important;
                     margin-bottom: 6px !important;
                   }
@@ -122,7 +133,6 @@ const Hero = () => {
                   .form-group, .form-control, .input-group, div, span, form, fieldset {
                     background: transparent !important;
                   }
-                  /* Ensure datepicker popups are visible */
                   .datepicker, .ui-datepicker, .calendar, [class*="calendar"], [class*="datepicker"], [class*="picker"] {
                     z-index: 9999 !important;
                     background: #fff !important;
@@ -145,11 +155,9 @@ const Hero = () => {
                       el.style.setProperty('background-color', '#fb7a10', 'important');
                       el.style.setProperty('background', '#fb7a10', 'important');
                     });
-                    // Make sure labels are visible
                     document.querySelectorAll('label').forEach(function(el) {
                       el.style.setProperty('display', 'block', 'important');
                       el.style.setProperty('margin-bottom', '6px', 'important');
-                      el.style.setProperty('color', '#888', 'important');
                     });
                     resizeToParent();
                   });
