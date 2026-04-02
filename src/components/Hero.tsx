@@ -51,12 +51,9 @@ const Hero = () => {
                   * { margin: 0; padding: 0; box-sizing: border-box; }
                   body { 
                     font-family: 'Montserrat', sans-serif; 
-                    background: rgba(255,255,255,0.12);
-                    backdrop-filter: blur(16px);
-                    -webkit-backdrop-filter: blur(16px);
+                    background: rgba(15,15,15,0.65);
                     border-radius: 12px;
                     padding: 20px 24px;
-                    border: 1px solid rgba(255,255,255,0.15);
                   }
                   
                   #bnl-widget-formular {
