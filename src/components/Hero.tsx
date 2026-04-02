@@ -1,8 +1,29 @@
+import { useState } from "react";
+import { format } from "date-fns";
+import { CalendarIcon, Users, ArrowDown } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
 import logoWhite from "@/assets/logo-white.png";
-import { ArrowDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Hero = () => {
+  const [checkIn, setCheckIn] = useState<Date>();
+  const [checkOut, setCheckOut] = useState<Date>();
+  const [guests, setGuests] = useState("2");
+
   return (
     <section id="hero" className="relative h-screen flex flex-col">
       {/* Background image */}
@@ -13,7 +34,6 @@ const Hero = () => {
         width={1920}
         height={1080}
       />
-      {/* Minimal dark overlay */}
       <div className="absolute inset-0 bg-foreground/40" />
 
       {/* Top bar — logo */}
@@ -36,27 +56,107 @@ const Hero = () => {
             <p className="font-body text-sm md:text-base text-primary-foreground/65 max-w-md leading-relaxed mb-10">
               Hanya 5 menit dari Bandara Adi Soemarmo — tempat ideal untuk beristirahat sebelum atau sesudah perjalanan Anda.
             </p>
+          </div>
+        </div>
+      </div>
 
-            <div className="flex items-center gap-4">
-              <a
-                href="#rooms"
-                className="font-body text-sm font-semibold bg-primary text-primary-foreground px-6 py-3 rounded hover:bg-secondary transition-colors"
-              >
-                Lihat Kamar
-              </a>
-              <a
-                href="#about"
-                className="font-body text-sm font-medium text-primary-foreground/80 hover:text-primary-foreground transition-colors underline underline-offset-4 decoration-primary-foreground/30"
-              >
-                Pelajari Lebih
-              </a>
+      {/* Booking Widget */}
+      <div className="relative z-10 container mx-auto px-4 pb-20">
+        <div className="bg-card/95 backdrop-blur-md rounded-xl border border-border/50 shadow-2xl p-4 md:p-6 max-w-4xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-end">
+            {/* Check-in */}
+            <div className="space-y-1.5">
+              <label className="font-body text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                Check-in
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-body font-normal h-11",
+                      !checkIn && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
+                    {checkIn ? format(checkIn, "dd MMM yyyy") : "Pilih tanggal"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={checkIn}
+                    onSelect={setCheckIn}
+                    disabled={(date) => date < new Date()}
+                    initialFocus
+                    className="p-3 pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
+
+            {/* Check-out */}
+            <div className="space-y-1.5">
+              <label className="font-body text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                Check-out
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-body font-normal h-11",
+                      !checkOut && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
+                    {checkOut ? format(checkOut, "dd MMM yyyy") : "Pilih tanggal"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={checkOut}
+                    onSelect={setCheckOut}
+                    disabled={(date) =>
+                      date < (checkIn || new Date())
+                    }
+                    initialFocus
+                    className="p-3 pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* Guests */}
+            <div className="space-y-1.5">
+              <label className="font-body text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                Tamu
+              </label>
+              <Select value={guests} onValueChange={setGuests}>
+                <SelectTrigger className="h-11 font-body">
+                  <Users className="mr-2 h-4 w-4 text-primary" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">1 Tamu</SelectItem>
+                  <SelectItem value="2">2 Tamu</SelectItem>
+                  <SelectItem value="3">3 Tamu</SelectItem>
+                  <SelectItem value="4">4 Tamu</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Search Button */}
+            <Button className="h-11 font-body font-semibold text-sm tracking-wide">
+              Cek Ketersediaan
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Bottom scroll indicator */}
-      <div className="relative z-10 pb-10 flex justify-center">
+      <div className="relative z-10 pb-6 flex justify-center">
         <a
           href="#about"
           className="flex flex-col items-center gap-2 text-primary-foreground/40 hover:text-primary-foreground/70 transition-colors"
