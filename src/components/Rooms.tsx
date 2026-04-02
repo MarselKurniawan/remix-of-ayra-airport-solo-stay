@@ -12,7 +12,7 @@ const rooms = [
     guest: "2 Tamu",
     size: "22 m²",
     desc: "Kamar nyaman dengan desain modern, cocok untuk perjalanan singkat maupun transit.",
-    amenities: ["AC", "TV LED 32\"", "WiFi Gratis", "Kamar Mandi Shower"],
+    amenities: ["AC", "TV LED 32\"", "WiFi", "Shower"],
   },
   {
     name: "Deluxe Room",
@@ -22,7 +22,7 @@ const rooms = [
     guest: "2 Tamu",
     size: "28 m²",
     desc: "Kamar luas dengan fasilitas premium dan pemandangan area hotel yang asri.",
-    amenities: ["AC", "TV LED 43\"", "WiFi Gratis", "Bathtub", "Mini Bar"],
+    amenities: ["AC", "TV LED 43\"", "WiFi", "Bathtub", "Mini Bar"],
   },
   {
     name: "Executive Suite",
@@ -32,7 +32,7 @@ const rooms = [
     guest: "2 Tamu",
     size: "40 m²",
     desc: "Suite eksklusif dengan ruang tamu terpisah, ideal untuk tamu bisnis dan keluarga.",
-    amenities: ["AC", "TV LED 55\"", "WiFi Gratis", "Bathtub", "Mini Bar", "Living Area"],
+    amenities: ["AC", "TV LED 55\"", "WiFi", "Bathtub", "Mini Bar", "Living Area"],
   },
 ];
 
@@ -40,87 +40,76 @@ const Rooms = () => {
   return (
     <section id="rooms" className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <span className="font-body text-xs font-semibold tracking-widest uppercase text-primary mb-3 block">
             Akomodasi
           </span>
-          <h2 className="font-heading text-3xl md:text-5xl text-foreground mb-6">Pilihan Kamar Kami</h2>
-          <p className="font-body text-muted-foreground">
-            Setiap kamar dirancang dengan perhatian terhadap detail untuk kenyamanan maksimal Anda.
+          <h2 className="font-heading text-3xl md:text-4xl text-foreground mb-4">Pilihan Kamar Kami</h2>
+          <p className="font-body text-sm text-muted-foreground">
+            Setiap kamar dirancang untuk kenyamanan maksimal Anda.
           </p>
         </div>
 
-        <div className="flex flex-col gap-16">
-          {rooms.map((room, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {rooms.map((room) => (
             <div
               key={room.name}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card rounded-2xl overflow-hidden border border-border group hover:shadow-2xl transition-shadow duration-500 ${
-                i % 2 === 1 ? "lg:direction-rtl" : ""
-              }`}
+              className="bg-card rounded-xl overflow-hidden border border-border group hover:shadow-xl transition-all duration-300"
             >
-              {/* Image — alternating side */}
-              <div className={`relative overflow-hidden h-72 lg:h-auto lg:min-h-[400px] ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+              {/* Image */}
+              <div className="relative overflow-hidden h-56">
                 <img
                   src={room.image}
                   alt={room.name}
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent" />
+                <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                  <span className="font-body text-sm font-bold text-foreground">{room.price}</span>
+                  <span className="font-body text-xs text-muted-foreground">/malam</span>
+                </div>
               </div>
 
               {/* Content */}
-              <div className={`flex flex-col justify-center p-8 md:p-12 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="font-body text-[10px] font-semibold tracking-widest uppercase text-primary">
-                    {room.bed} · {room.size}
-                  </span>
-                </div>
-
-                <h3 className="font-heading text-2xl md:text-3xl text-foreground mb-3">{room.name}</h3>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">{room.desc}</p>
+              <div className="p-6">
+                <h3 className="font-heading text-xl text-foreground mb-2">{room.name}</h3>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">{room.desc}</p>
 
                 {/* Specs */}
-                <div className="flex items-center gap-6 mb-6 pb-6 border-b border-border">
-                  <span className="flex items-center gap-2 text-sm font-body text-muted-foreground">
-                    <Bed size={16} className="text-primary" /> {room.bed}
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border">
+                  <span className="flex items-center gap-1.5 text-xs font-body text-muted-foreground">
+                    <Bed size={14} className="text-primary" /> {room.bed}
                   </span>
-                  <span className="flex items-center gap-2 text-sm font-body text-muted-foreground">
-                    <Users size={16} className="text-primary" /> {room.guest}
+                  <span className="flex items-center gap-1.5 text-xs font-body text-muted-foreground">
+                    <Users size={14} className="text-primary" /> {room.guest}
                   </span>
-                  <span className="flex items-center gap-2 text-sm font-body text-muted-foreground">
-                    <Maximize size={16} className="text-primary" /> {room.size}
+                  <span className="flex items-center gap-1.5 text-xs font-body text-muted-foreground">
+                    <Maximize size={14} className="text-primary" /> {room.size}
                   </span>
                 </div>
 
                 {/* Amenities */}
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-1.5 mb-5">
                   {room.amenities.map((a) => (
                     <span
                       key={a}
-                      className="bg-muted text-muted-foreground font-body text-xs px-3 py-1.5 rounded-full"
+                      className="bg-muted text-muted-foreground font-body text-[11px] px-2.5 py-1 rounded-full"
                     >
                       {a}
                     </span>
                   ))}
                 </div>
 
-                {/* Price + CTA */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="font-heading text-2xl md:text-3xl text-foreground">{room.price}</span>
-                    <span className="font-body text-sm text-muted-foreground ml-1">/malam</span>
-                  </div>
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-3 rounded-lg hover:bg-secondary transition-colors"
-                  >
-                    Pesan Kamar
-                    <ArrowRight size={16} />
-                  </a>
-                </div>
+                {/* CTA */}
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 w-full justify-center bg-foreground text-background font-body font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  Pesan Kamar
+                  <ArrowRight size={14} />
+                </a>
               </div>
             </div>
           ))}
