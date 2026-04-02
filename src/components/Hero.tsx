@@ -1,32 +1,7 @@
-import { useEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
 
 const Hero = () => {
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Create the widget div
-    if (widgetRef.current) {
-      const widgetDiv = document.createElement("div");
-      widgetDiv.id = "bnl-widget-formular";
-      widgetDiv.setAttribute("pid", "PROPDE_01KG1JF9WSHBB920MFQJ8WC346");
-      widgetDiv.setAttribute("data-url", "https://booking.sinergimax.com/widget");
-      widgetDiv.setAttribute("data-style", "{'btnText':'Book Now'}");
-      widgetRef.current.innerHTML = "";
-      widgetRef.current.appendChild(widgetDiv);
-
-      // Load the script
-      const existingScript = document.querySelector('script[src*="widget-formular"]');
-      if (!existingScript) {
-        const script = document.createElement("script");
-        script.src = "https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js";
-        script.async = true;
-        document.body.appendChild(script);
-      }
-    }
-  }, []);
-
   return (
     <section id="hero" className="relative h-screen flex flex-col">
       {/* Background image */}
@@ -61,12 +36,61 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Booking Widget - Book and Link */}
-      <div className="relative z-10 container mx-auto px-4 pb-20">
-        <div
-          ref={widgetRef}
-          className="booking-widget-wrapper bg-card/95 backdrop-blur-md rounded-xl border border-border/50 shadow-2xl p-4 md:p-6 max-w-4xl"
-        />
+      {/* Booking Widget - Book and Link (isolated in iframe) */}
+      <div className="relative z-10 container mx-auto px-4 pb-16">
+        <div className="bg-card/95 backdrop-blur-md rounded-xl border border-border/50 shadow-2xl max-w-4xl overflow-hidden">
+          <iframe
+            srcDoc={`
+              <!DOCTYPE html>
+              <html>
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body { 
+                    font-family: 'Montserrat', sans-serif; 
+                    background: transparent;
+                    padding: 16px 24px;
+                  }
+                  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+                  
+                  /* Override widget button styles */
+                  button, .btn, [type="submit"], a.btn {
+                    background-color: #ff3702 !important;
+                    background: #ff3702 !important;
+                    border: none !important;
+                    border-radius: 0.5rem !important;
+                    font-family: 'Montserrat', sans-serif !important;
+                    font-weight: 600 !important;
+                    color: #ffffff !important;
+                    cursor: pointer !important;
+                  }
+                  button:hover, .btn:hover, [type="submit"]:hover, a.btn:hover {
+                    background-color: #ff6802 !important;
+                    background: #ff6802 !important;
+                  }
+                  input, select {
+                    border-radius: 0.5rem !important;
+                    font-family: 'Montserrat', sans-serif !important;
+                  }
+                  label {
+                    font-family: 'Montserrat', sans-serif !important;
+                  }
+                </style>
+              </head>
+              <body>
+                <div id="bnl-widget-formular" pid="PROPDE_01KG1JF9WSHBB920MFQJ8WC346" data-url="https://booking.sinergimax.com/widget" data-style="{'btnText':'Book Now'}"></div>
+                <script src="https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js"><\/script>
+              </body>
+              </html>
+            `}
+            className="w-full border-0"
+            style={{ height: "80px", minHeight: "80px" }}
+            title="Booking Widget"
+            loading="lazy"
+          />
+        </div>
       </div>
 
       {/* Bottom scroll indicator */}
