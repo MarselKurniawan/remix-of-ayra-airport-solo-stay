@@ -174,7 +174,7 @@ const Hero = () => {
               </html>
             `}
             className="w-full border-0"
-            style={{ height: "120px", minHeight: "120px", transition: "height 0.3s ease" }}
+            style={{ height: "90px", minHeight: "90px", transition: "height 0.3s ease" }}
             title="Booking Widget"
             loading="eager"
           />
