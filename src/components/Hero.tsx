@@ -112,14 +112,19 @@ const Hero = () => {
                 <script>
                   // Force transparent background after widget loads
                   var observer = new MutationObserver(function() {
-                    document.querySelectorAll('*').forEach(function(el) {
-                      el.style.backgroundColor = 'transparent';
+                    document.querySelectorAll('div, span, form, fieldset, table, tr, td, th, thead, tbody, p, section, header, footer, nav, main, article, aside, ul, ol, li, dl, dt, dd').forEach(function(el) {
+                      if (!el.matches('button, .btn, [type=submit], a.btn, input, select')) {
+                        el.style.setProperty('background-color', 'transparent', 'important');
+                        el.style.setProperty('background', 'transparent', 'important');
+                      }
                     });
                     document.querySelectorAll('button, .btn, [type=submit], a.btn').forEach(function(el) {
-                      el.style.backgroundColor = '#fb7a10';
+                      el.style.setProperty('background-color', '#fb7a10', 'important');
+                      el.style.setProperty('background', '#fb7a10', 'important');
                     });
                     document.querySelectorAll('input, select').forEach(function(el) {
-                      el.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                      el.style.setProperty('background-color', 'rgba(255,255,255,0.1)', 'important');
+                      el.style.setProperty('background', 'rgba(255,255,255,0.1)', 'important');
                     });
                   });
                   observer.observe(document.body, { childList: true, subtree: true });
