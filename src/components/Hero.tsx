@@ -1,29 +1,7 @@
-import { useState } from "react";
-import { format } from "date-fns";
-import { CalendarIcon, Users, ArrowDown } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
-import logoWhite from "@/assets/logo-white.png";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const Hero = () => {
-  const [checkIn, setCheckIn] = useState<Date>();
-  const [checkOut, setCheckOut] = useState<Date>();
-  const [guests, setGuests] = useState("2");
-
   return (
     <section id="hero" className="relative h-screen flex flex-col">
       {/* Background image */}
@@ -58,98 +36,60 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Booking Widget */}
-      <div className="relative z-10 container mx-auto px-4 pb-20">
-        <div className="bg-card/95 backdrop-blur-md rounded-xl border border-border/50 shadow-2xl p-4 md:p-6 max-w-4xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-end">
-            {/* Check-in */}
-            <div className="space-y-1.5">
-              <label className="font-body text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
-                Check-in
-              </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-body font-normal h-11",
-                      !checkIn && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-                    {checkIn ? format(checkIn, "dd MMM yyyy") : "Pilih tanggal"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={checkIn}
-                    onSelect={setCheckIn}
-                    disabled={(date) => date < new Date()}
-                    initialFocus
-                    className="p-3 pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Check-out */}
-            <div className="space-y-1.5">
-              <label className="font-body text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
-                Check-out
-              </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-body font-normal h-11",
-                      !checkOut && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-                    {checkOut ? format(checkOut, "dd MMM yyyy") : "Pilih tanggal"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={checkOut}
-                    onSelect={setCheckOut}
-                    disabled={(date) =>
-                      date < (checkIn || new Date())
-                    }
-                    initialFocus
-                    className="p-3 pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Guests */}
-            <div className="space-y-1.5">
-              <label className="font-body text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
-                Tamu
-              </label>
-              <Select value={guests} onValueChange={setGuests}>
-                <SelectTrigger className="h-11 font-body">
-                  <Users className="mr-2 h-4 w-4 text-primary" />
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1 Tamu</SelectItem>
-                  <SelectItem value="2">2 Tamu</SelectItem>
-                  <SelectItem value="3">3 Tamu</SelectItem>
-                  <SelectItem value="4">4 Tamu</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Search Button */}
-            <Button className="h-11 font-body font-semibold text-sm tracking-wide">
-              Cek Ketersediaan
-            </Button>
-          </div>
+      {/* Booking Widget - Book and Link (isolated in iframe) */}
+      <div className="relative z-10 container mx-auto px-4 pb-16">
+        <div className="bg-card/95 backdrop-blur-md rounded-xl border border-border/50 shadow-2xl max-w-4xl overflow-hidden">
+          <iframe
+            srcDoc={`
+              <!DOCTYPE html>
+              <html>
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body { 
+                    font-family: 'Montserrat', sans-serif; 
+                    background: transparent;
+                    padding: 16px 24px;
+                  }
+                  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+                  
+                  /* Override widget button styles */
+                  button, .btn, [type="submit"], a.btn {
+                    background-color: #ff3702 !important;
+                    background: #ff3702 !important;
+                    border: none !important;
+                    border-radius: 0.5rem !important;
+                    font-family: 'Montserrat', sans-serif !important;
+                    font-weight: 600 !important;
+                    color: #ffffff !important;
+                    cursor: pointer !important;
+                  }
+                  button:hover, .btn:hover, [type="submit"]:hover, a.btn:hover {
+                    background-color: #ff6802 !important;
+                    background: #ff6802 !important;
+                  }
+                  input, select {
+                    border-radius: 0.5rem !important;
+                    font-family: 'Montserrat', sans-serif !important;
+                  }
+                  label {
+                    font-family: 'Montserrat', sans-serif !important;
+                  }
+                </style>
+              </head>
+              <body>
+                <div id="bnl-widget-formular" pid="PROPDE_01KG1JF9WSHBB920MFQJ8WC346" data-url="https://booking.sinergimax.com/widget" data-style="{'btnText':'Book Now'}"></div>
+                <script src="https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js"><\/script>
+              </body>
+              </html>
+            `}
+            className="w-full border-0"
+            style={{ height: "80px", minHeight: "80px" }}
+            title="Booking Widget"
+            loading="lazy"
+          />
         </div>
       </div>
 
