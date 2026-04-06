@@ -1,20 +1,25 @@
-import { useEffect } from "react";
-import { ArrowDown } from "lucide-react";
+import { useState } from "react";
+import { ArrowDown, CalendarDays, Users, Search } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
 
 const Hero = () => {
-  useEffect(() => {
-    const handleMessage = (e: MessageEvent) => {
-      if (e.data?.type === 'resize-iframe') {
-        const iframe = document.getElementById('booking-iframe') as HTMLIFrameElement;
-        if (iframe) {
-          iframe.style.height = Math.max(120, e.data.height + 10) + 'px';
-        }
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, []);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("2");
+
+  const handleSearch = () => {
+    const baseUrl = "https://booking.sinergimax.com/widget";
+    const params = new URLSearchParams();
+    if (checkIn) params.set("checkin", checkIn);
+    if (checkOut) params.set("checkout", checkOut);
+    if (guests) params.set("guests", guests);
+    params.set("pid", "PROPDE_01KG1JF9WSHBB920MFQJ8WC346");
+    window.open(`${baseUrl}?${params.toString()}`, "_blank");
+  };
+
+  // Get today's date as min
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <section id="hero" className="relative h-screen flex flex-col">
       {/* Background image */}
@@ -49,181 +54,82 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Booking Widget - Book and Link (isolated in iframe) */}
+      {/* Modern Booking Widget */}
       <div className="relative z-10 container mx-auto px-4 pb-16">
-        <div className="max-w-4xl bg-white rounded-xl shadow-2xl">
-          <iframe
-            id="booking-iframe"
-            srcDoc={`
-              <!DOCTYPE html>
-              <html>
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-                <style>
-                  * { margin: 0; padding: 0; box-sizing: border-box; }
-                  html, body { 
-                    font-family: 'Montserrat', sans-serif !important; 
-                    background: #ffffff !important;
-                    padding: 14px 28px;
-                    overflow: hidden;
-                  }
-                  
-                  #bnl-widget-formular, #bnl-widget-formular * {
-                    font-family: 'Montserrat', sans-serif !important;
-                  }
-                  #bnl-widget-formular {
-                    display: flex !important;
-                    align-items: flex-end !important;
-                    gap: 14px !important;
-                    flex-wrap: nowrap !important;
-                  }
-                  #bnl-widget-formular > div, #bnl-widget-formular > span, #bnl-widget-formular > fieldset {
-                    flex: 1 !important;
-                    min-width: 0 !important;
-                  }
+        <div className="max-w-4xl">
+          <div className="bg-card/95 backdrop-blur-md rounded-2xl shadow-2xl p-2">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto_auto] gap-2">
+              {/* Check In */}
+              <div className="relative group">
+                <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
+                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                    Check In
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={16} className="text-primary shrink-0" />
+                    <input
+                      type="date"
+                      value={checkIn}
+                      min={today}
+                      onChange={(e) => setCheckIn(e.target.value)}
+                      className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                  button, .btn, [type="submit"], a.btn {
-                    background: #fb7a10 !important;
-                    border: none !important;
-                    border-radius: 8px !important;
-                    font-family: 'Montserrat', sans-serif !important;
-                    font-weight: 600 !important;
-                    font-size: 13px !important;
-                    color: #ffffff !important;
-                    cursor: pointer !important;
-                    padding: 11px 24px !important;
-                    transition: all 0.2s ease !important;
-                    text-transform: uppercase !important;
-                    letter-spacing: 0.05em !important;
-                    white-space: nowrap !important;
-                    flex-shrink: 0 !important;
-                  }
-                  button:hover, .btn:hover, [type="submit"]:hover, a.btn:hover {
-                    background: #e06d0e !important;
-                  }
-                  input, select {
-                    border-radius: 6px !important;
-                    font-family: 'Montserrat', sans-serif !important;
-                    font-size: 13px !important;
-                    border: 1px solid #ddd !important;
-                    background: #f7f7f7 !important;
-                    color: #333 !important;
-                    padding: 10px 12px !important;
-                    width: 100% !important;
-                  }
-                  input:focus, select:focus {
-                    outline: none !important;
-                    border-color: #fb7a10 !important;
-                    box-shadow: 0 0 0 2px rgba(251,122,16,0.15) !important;
-                  }
-                  input::placeholder { color: #aaa !important; }
-                  label {
-                    font-family: 'Montserrat', sans-serif !important;
-                    font-size: 10px !important;
-                    font-weight: 700 !important;
-                    text-transform: uppercase !important;
-                    letter-spacing: 0.1em !important;
-                    color: #999 !important;
-                    display: block !important;
-                    margin-bottom: 6px !important;
-                  }
-                  select option { background: #fff !important; color: #333 !important; }
-                  .form-group, .form-control, .input-group, div, span, form, fieldset {
-                    background: transparent !important;
-                  }
-                  .datepicker, .ui-datepicker, .calendar, [class*="calendar"], [class*="datepicker"], [class*="picker"] {
-                    z-index: 9999 !important;
-                    background: #fff !important;
-                    border: 1px solid #e0e0e0 !important;
-                    border-radius: 8px !important;
-                    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
-                  }
-                </style>
-              </head>
-              <body>
-                <div id="bnl-widget-formular" pid="PROPDE_01KG1JF9WSHBB920MFQJ8WC346" data-url="https://booking.sinergimax.com/widget" data-style="{'btnText':'Book Now'}"></div>
-                <script src="https://admin.bookandlink.com/public/js/widget/v2/widget-formular.min.js"><\/script>
-                <script>
-                  function resizeToParent() {
-                    var h = document.body.scrollHeight;
-                    window.parent.postMessage({ type: 'resize-iframe', height: h }, '*');
-                  }
-                  
-                  function addLabels() {
-                    // Find the top-level children of the widget (each field wrapper)
-                    var widget = document.getElementById('bnl-widget-formular');
-                    if (!widget) return;
-                    var children = widget.children;
-                    for (var i = 0; i < children.length; i++) {
-                      var child = children[i];
-                      // Skip if already has a label we added
-                      if (child.querySelector('.custom-label')) continue;
-                      if (child.tagName === 'BUTTON' || child.tagName === 'A') continue;
-                      
-                      var input = child.querySelector('input') || child.querySelector('select');
-                      if (!input) continue;
-                      
-                      var label = document.createElement('div');
-                      label.className = 'custom-label';
-                      var ph = input.getAttribute('placeholder') || input.getAttribute('name') || '';
-                      if (ph.toLowerCase().includes('check in') || ph.toLowerCase().includes('checkin') || ph.toLowerCase().includes('arrival')) {
-                        label.textContent = 'Check In';
-                      } else if (ph.toLowerCase().includes('check out') || ph.toLowerCase().includes('checkout') || ph.toLowerCase().includes('departure')) {
-                        label.textContent = 'Check Out';
-                      } else if (ph.toLowerCase().includes('promo')) {
-                        label.textContent = 'Promo Code';
-                      } else if (ph) {
-                        label.textContent = ph;
-                      }
-                      if (label.textContent) {
-                        label.style.cssText = 'font-family:Montserrat,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#999;margin-bottom:6px;display:block;';
-                        child.insertBefore(label, child.firstChild);
-                      }
-                    }
-                  }
-                  
-                  var observer = new MutationObserver(function() {
-                    document.querySelectorAll('button, .btn, [type=submit], a.btn').forEach(function(el) {
-                      el.style.setProperty('background-color', '#fb7a10', 'important');
-                      el.style.setProperty('background', '#fb7a10', 'important');
-                    });
-                    addLabels();
-                    resizeToParent();
-                  });
-                  observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-                  window.addEventListener('load', function() { 
-                    setTimeout(function() { addLabels(); resizeToParent(); }, 500); 
-                    setTimeout(function() { addLabels(); resizeToParent(); }, 1000); 
-                  });
-                  document.addEventListener('click', function(e) {
-                    // When clicking date inputs, expand iframe for calendar
-                    var target = e.target;
-                    if (target.tagName === 'INPUT' && (target.placeholder || '').toLowerCase().includes('check')) {
-                      document.body.style.overflow = 'visible';
-                      window.parent.postMessage({ type: 'resize-iframe', height: 400 }, '*');
-                    }
-                    setTimeout(resizeToParent, 100);
-                    setTimeout(resizeToParent, 300);
-                    setTimeout(resizeToParent, 600);
-                  });
-                  // Shrink back when clicking outside
-                  document.addEventListener('focusout', function() {
-                    setTimeout(function() {
-                      document.body.style.overflow = 'hidden';
-                      resizeToParent();
-                    }, 200);
-                  });
-                <\/script>
-              </body>
-              </html>
-            `}
-            className="w-full border-0"
-            style={{ height: "110px", minHeight: "90px", transition: "height 0.3s ease" }}
-            title="Booking Widget"
-            loading="eager"
-          />
+              {/* Check Out */}
+              <div className="relative group">
+                <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
+                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                    Check Out
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={16} className="text-primary shrink-0" />
+                    <input
+                      type="date"
+                      value={checkOut}
+                      min={checkIn || today}
+                      onChange={(e) => setCheckOut(e.target.value)}
+                      className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Guests */}
+              <div className="relative group">
+                <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
+                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                    Tamu
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <Users size={16} className="text-primary shrink-0" />
+                    <select
+                      value={guests}
+                      onChange={(e) => setGuests(e.target.value)}
+                      className="bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer appearance-none pr-4"
+                    >
+                      {[1, 2, 3, 4, 5, 6].map((n) => (
+                        <option key={n} value={n}>
+                          {n} {n === 1 ? "Tamu" : "Tamu"}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Search Button */}
+              <button
+                onClick={handleSearch}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-3 font-body text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
+              >
+                <Search size={18} />
+                <span className="hidden md:inline">Cari</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
