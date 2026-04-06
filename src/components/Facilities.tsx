@@ -2,20 +2,22 @@ import galleryLobby from "@/assets/gallery-lobby.jpg";
 import galleryRestaurant from "@/assets/gallery-restaurant.jpg";
 import galleryGym from "@/assets/gallery-gym.jpg";
 import galleryMeeting from "@/assets/gallery-meeting.jpg";
-import { Car, Coffee, Dumbbell, Shirt, ParkingCircle, ConciergeBell, ShowerHead, Tv } from "lucide-react";
+import { Car, Coffee, Dumbbell, Shirt, ParkingCircle, ConciergeBell, ShowerHead, Tv, UtensilsCrossed, Crown } from "lucide-react";
 
 const facilities = [
-  { icon: ConciergeBell, name: "Resepsionis 24 Jam", image: galleryLobby },
-  { icon: Coffee, name: "Restoran & Café", image: galleryRestaurant },
-  { icon: Dumbbell, name: "Fitness Center", image: galleryGym },
+  { icon: UtensilsCrossed, name: "Riverside Resto", image: galleryRestaurant },
+  { icon: Crown, name: "Ballroom", image: galleryLobby },
   { icon: Tv, name: "Meeting Room", image: galleryMeeting },
+  { icon: Dumbbell, name: "Fitness Center", image: galleryGym },
 ];
 
 const facilityList = [
+  { icon: ConciergeBell, name: "Resepsionis 24 Jam" },
   { icon: ParkingCircle, name: "Parkir Luas Gratis" },
   { icon: Car, name: "Shuttle Bandara" },
   { icon: Shirt, name: "Layanan Laundry" },
   { icon: ShowerHead, name: "Air Panas 24 Jam" },
+  { icon: Coffee, name: "Café" },
 ];
 
 const Facilities = () => {
