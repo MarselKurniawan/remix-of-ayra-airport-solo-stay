@@ -1,6 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDown, CalendarDays, Users, Search } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
+import heroWedding from "@/assets/hero-wedding.jpg";
+import heroResto from "@/assets/hero-resto.jpg";
+
+const slides = [
+  {
+    image: heroImg,
+    kicker: "Airport Hotel · Solo, Central Java",
+    title: (
+      <>
+        Where comfort
+        <br />
+        meets convenience.
+      </>
+    ),
+    desc: "Hanya 5 menit dari Bandara Adi Soemarmo — tempat ideal untuk beristirahat sebelum atau sesudah perjalanan Anda.",
+  },
+  {
+    image: heroWedding,
+    kicker: "Wedding & Ballroom",
+    title: (
+      <>
+        Pernikahan impian
+        <br />
+        di Ballroom Ayra.
+      </>
+    ),
+    desc: "Paket pernikahan eksklusif dengan dekorasi mewah, kapasitas hingga 500 tamu. Promo spesial early bird tersedia.",
+  },
+  {
+    image: heroResto,
+    kicker: "Riverside Resto & Café",
+    title: (
+      <>
+        Bersantap dengan
+        <br />
+        panorama tepi sungai.
+      </>
+    ),
+    desc: "Nikmati hidangan istimewa di Riverside Resto dengan suasana yang hangat dan pemandangan menawan.",
+  },
+];
 
 const Hero = () => {
   const [checkIn, setCheckIn] = useState("");
