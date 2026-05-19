@@ -58,39 +58,56 @@ const Hero = () => {
     window.open(`${baseUrl}?${params.toString()}`, "_blank");
   };
 
-  // Get today's date as min
   const today = new Date().toISOString().split("T")[0];
 
-  return (
-    <section id="hero" className="relative h-screen flex flex-col">
-      {/* Background image */}
-      <img
-        src={heroImg}
-        alt="Ayra Airport Hotel Solo"
-        className="absolute inset-0 w-full h-full object-cover"
-        width={1920}
-        height={1080}
-      />
-      <div className="absolute inset-0 bg-foreground/40" />
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setCurrent((c) => (c + 1) % slides.length), 6000);
+    return () => clearInterval(id);
+  }, []);
 
-      {/* Spacer for navbar */}
+  return (
+    <section id="hero" className="relative h-screen flex flex-col overflow-hidden">
+      {slides.map((s, i) => (
+        <img
+          key={i}
+          src={s.image}
+          alt=""
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            i === current ? "opacity-100" : "opacity-0"
+          }`}
+          width={1920}
+          height={1080}
+        />
+      ))}
+      <div className="absolute inset-0 bg-foreground/50" />
+
       <div className="relative z-10 pt-24" />
 
-      {/* Center content */}
       <div className="relative z-10 flex-1 flex items-center">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl">
-            <p className="font-body text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-primary-foreground/60 mb-5">
-              Airport Hotel · Solo, Central Java
+          <div className="max-w-2xl" key={current}>
+            <p className="font-body text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-primary-foreground/70 mb-5 animate-fade-in">
+              {slides[current].kicker}
             </p>
-            <h1 className="font-heading text-[2.75rem] md:text-6xl lg:text-7xl leading-[1] text-primary-foreground mb-6">
-              Where comfort
-              <br />
-              meets convenience.
+            <h1 className="font-heading text-[2.75rem] md:text-6xl lg:text-7xl leading-[1] text-primary-foreground mb-6 animate-fade-in">
+              {slides[current].title}
             </h1>
-            <p className="font-body text-sm md:text-base text-primary-foreground/65 max-w-md leading-relaxed mb-10">
-              Hanya 5 menit dari Bandara Adi Soemarmo — tempat ideal untuk beristirahat sebelum atau sesudah perjalanan Anda.
+            <p className="font-body text-sm md:text-base text-primary-foreground/80 max-w-md leading-relaxed mb-8 animate-fade-in">
+              {slides[current].desc}
             </p>
+          </div>
+          <div className="flex items-center gap-2">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                aria-label={`Slide ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === current ? "w-8 bg-primary" : "w-4 bg-primary-foreground/40 hover:bg-primary-foreground/70"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
