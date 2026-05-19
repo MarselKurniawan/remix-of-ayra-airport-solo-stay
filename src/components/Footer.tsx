@@ -54,10 +54,23 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="border-t border-primary-foreground/10 py-4">
-        <p className="text-center font-body text-xs text-primary-foreground/40">
-          © 2026 Ayra Airport Hotel Solo. All rights reserved.
-        </p>
+      <div className="border-t border-primary-foreground/10 py-5">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-2">
+          <p className="font-body text-xs text-primary-foreground/40">
+            © 2026 Ayra Airport Hotel Solo. All rights reserved.
+          </p>
+          <p className="font-body text-xs text-primary-foreground/60">
+            Managed by{" "}
+            <a
+              href="https://www.sinergimanajemen.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold tracking-wide text-primary hover:text-primary/80 transition-colors uppercase"
+            >
+              Sinergi Manajemen Indonesia
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
