@@ -1,17 +1,25 @@
-import galleryLobby from "@/assets/gallery-lobby.jpg";
-import galleryRestaurant from "@/assets/gallery-restaurant.jpg";
-import galleryPool from "@/assets/gallery-pool.jpg";
-import galleryMeeting from "@/assets/gallery-meeting.jpg";
-import galleryGym from "@/assets/gallery-gym.jpg";
-import galleryParking from "@/assets/gallery-parking.jpg";
+import gFasad from "@/assets/gallery-fasad.webp";
+import gLobbyMural from "@/assets/gallery-lobby-mural.webp";
+import gLobby1 from "@/assets/gallery-lobby-1.webp";
+import gLobby2 from "@/assets/gallery-lobby-2.webp";
+import gReception from "@/assets/gallery-reception.webp";
+import gMeeting from "@/assets/gallery-meeting.webp";
+import gResto from "@/assets/gallery-resto.webp";
+import gSuite1 from "@/assets/gallery-suite-1.webp";
+import gSuite2 from "@/assets/gallery-suite-2.webp";
+import gSuite3 from "@/assets/gallery-suite-3.webp";
 
 const photos = [
-  { src: galleryLobby, alt: "Lobby Hotel", label: "Lobby" },
-  { src: galleryRestaurant, alt: "Restoran & Café", label: "Restoran" },
-  { src: galleryPool, alt: "Kolam Renang", label: "Kolam Renang" },
-  { src: galleryMeeting, alt: "Meeting Room", label: "Meeting Room" },
-  { src: galleryGym, alt: "Fitness Center", label: "Gym" },
-  { src: galleryParking, alt: "Area Parkir", label: "Parkir" },
+  { src: gFasad, alt: "Fasad Ayra Hotel", label: "Fasad Hotel" },
+  { src: gReception, alt: "Resepsionis", label: "Reception" },
+  { src: gLobby1, alt: "Lobby Ayra Hotel", label: "Lobby" },
+  { src: gLobby2, alt: "Area Lobby", label: "Lounge Area" },
+  { src: gLobbyMural, alt: "Lobby dengan mural", label: "Mural Lobby" },
+  { src: gResto, alt: "Riverside Resto", label: "Riverside Resto" },
+  { src: gMeeting, alt: "Meeting Room", label: "Meeting Room" },
+  { src: gSuite1, alt: "Suites Room", label: "Suites Room" },
+  { src: gSuite2, alt: "Suasana Suites", label: "Suite Vibes" },
+  { src: gSuite3, alt: "Workspace Suites", label: "Workspace" },
 ];
 
 const Gallery = () => {
