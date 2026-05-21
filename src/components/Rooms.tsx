@@ -8,6 +8,11 @@ import roomSuperior3 from "@/assets/room-superior-3.jpg";
 import roomSuite from "@/assets/room-suite.jpg";
 import roomSuite2 from "@/assets/room-suite-2.jpg";
 import roomSuite3 from "@/assets/room-suite-3.jpg";
+import deluxeTwin1 from "@/assets/deluxe-twin-1.webp";
+import deluxeTwin2 from "@/assets/deluxe-twin-2.webp";
+import deluxeTwin3 from "@/assets/deluxe-twin-3.webp";
+import deluxeTwin4 from "@/assets/deluxe-twin-4.webp";
+import deluxeTwin5 from "@/assets/deluxe-twin-5.webp";
 import { Bed, Users, Maximize, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +37,7 @@ const rooms = [
   },
   {
     name: "Deluxe Twin",
-    images: [roomDeluxe2, roomDeluxe3, roomDeluxe],
+    images: [deluxeTwin1, deluxeTwin2, deluxeTwin3, deluxeTwin4, deluxeTwin5],
     bed: "Twin Bed",
     guest: "2 Tamu",
     size: "26 m²",
