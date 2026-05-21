@@ -1,5 +1,5 @@
 import logoWhite from "@/assets/logo-white.png";
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Music2 } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -15,11 +15,11 @@ const Footer = () => {
           <div>
             <h3 className="font-heading text-lg text-primary-foreground mb-4">Kontak</h3>
             <div className="space-y-3">
-              <a href="tel:+62271123456" className="flex items-center gap-3 font-body text-sm text-primary-foreground/60 hover:text-primary transition-colors">
-                <Phone size={16} /> +62 271 123 456
+              <a href="tel:+6285228999419" className="flex items-center gap-3 font-body text-sm text-primary-foreground/60 hover:text-primary transition-colors">
+                <Phone size={16} /> 0852-2899-9419
               </a>
-              <a href="mailto:info@ayrahotel.com" className="flex items-center gap-3 font-body text-sm text-primary-foreground/60 hover:text-primary transition-colors">
-                <Mail size={16} /> info@ayrahotel.com
+              <a href="mailto:info@ayrahotelairport.com" className="flex items-center gap-3 font-body text-sm text-primary-foreground/60 hover:text-primary transition-colors">
+                <Mail size={16} /> info@ayrahotelairport.com
               </a>
               <div className="flex items-start gap-3 font-body text-sm text-primary-foreground/60">
                 <MapPin size={16} className="mt-0.5 flex-shrink-0" />
@@ -43,14 +43,17 @@ const Footer = () => {
           <div>
             <h3 className="font-heading text-lg text-primary-foreground mb-4">Ikuti Kami</h3>
             <div className="flex items-center gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:bg-primary hover:text-primary-foreground transition-all">
+              <a href="https://instagram.com/ayrahotelairportsolo" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:bg-primary hover:text-primary-foreground transition-all">
                 <Instagram size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:bg-primary hover:text-primary-foreground transition-all">
+              <a href="https://tiktok.com/@ayrahotelairportsolo" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:bg-primary hover:text-primary-foreground transition-all">
+                <Music2 size={18} />
+              </a>
+              <a href="https://facebook.com/ayrahotelairportsolo" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/60 hover:bg-primary hover:text-primary-foreground transition-all">
                 <Facebook size={18} />
               </a>
             </div>
-            <p className="font-body text-sm text-primary-foreground/60 mt-4">@ayraairporthotel</p>
+            <p className="font-body text-sm text-primary-foreground/60 mt-4">@ayrahotelairportsolo</p>
           </div>
         </div>
       </div>

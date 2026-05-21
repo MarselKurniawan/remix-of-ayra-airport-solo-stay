@@ -13,32 +13,56 @@ import { cn } from "@/lib/utils";
 
 const rooms = [
   {
-    name: "Superior Room",
+    name: "Superior Twin",
     images: [roomSuperior, roomSuperior2, roomSuperior3],
-    price: "Rp 450.000",
     bed: "Twin Bed",
     guest: "2 Tamu",
     size: "22 m²",
-    desc: "Kamar nyaman dengan desain modern, cocok untuk perjalanan singkat maupun transit.",
+    desc: "Kamar nyaman dengan dua tempat tidur terpisah, ideal untuk perjalanan singkat maupun transit.",
     amenities: ["AC", "TV LED 32\"", "WiFi", "Shower"],
   },
   {
-    name: "Deluxe Room",
+    name: "Deluxe Double",
     images: [roomDeluxe, roomDeluxe2, roomDeluxe3],
-    price: "Rp 650.000",
-    bed: "King Bed",
+    bed: "Double Bed",
     guest: "2 Tamu",
-    size: "28 m²",
-    desc: "Kamar luas dengan fasilitas premium dan pemandangan area hotel yang asri.",
+    size: "26 m²",
+    desc: "Kamar modern dengan double bed dan fasilitas premium untuk kenyamanan maksimal.",
     amenities: ["AC", "TV LED 43\"", "WiFi", "Bathtub", "Mini Bar"],
   },
   {
-    name: "Executive Suite",
-    images: [roomSuite, roomSuite2, roomSuite3],
-    price: "Rp 950.000",
+    name: "Deluxe Twin",
+    images: [roomDeluxe2, roomDeluxe3, roomDeluxe],
+    bed: "Twin Bed",
+    guest: "2 Tamu",
+    size: "26 m²",
+    desc: "Pilihan Deluxe dengan dua tempat tidur terpisah, cocok untuk teman seperjalanan.",
+    amenities: ["AC", "TV LED 43\"", "WiFi", "Bathtub", "Mini Bar"],
+  },
+  {
+    name: "Executive Double",
+    images: [roomSuperior3, roomSuperior, roomSuperior2],
     bed: "King Bed",
     guest: "2 Tamu",
-    size: "40 m²",
+    size: "32 m²",
+    desc: "Kamar eksekutif yang lapang dengan king bed dan pemandangan area hotel yang asri.",
+    amenities: ["AC", "TV LED 43\"", "WiFi", "Bathtub", "Mini Bar", "Work Desk"],
+  },
+  {
+    name: "Junior Suites",
+    images: [roomSuite2, roomSuite3, roomSuite],
+    bed: "King Bed",
+    guest: "2 Tamu",
+    size: "38 m²",
+    desc: "Suite kompak dengan area duduk terpisah untuk pengalaman menginap yang lebih leluasa.",
+    amenities: ["AC", "TV LED 55\"", "WiFi", "Bathtub", "Mini Bar", "Sofa"],
+  },
+  {
+    name: "Suites Room",
+    images: [roomSuite, roomSuite3, roomSuite2],
+    bed: "King Bed",
+    guest: "2 Tamu",
+    size: "45 m²",
     desc: "Suite eksklusif dengan ruang tamu terpisah, ideal untuk tamu bisnis dan keluarga.",
     amenities: ["AC", "TV LED 55\"", "WiFi", "Bathtub", "Mini Bar", "Living Area"],
   },
@@ -73,7 +97,6 @@ const RoomImageSlider = ({ images, name }: { images: string[]; name: string }) =
         />
       ))}
 
-      {/* Nav arrows */}
       <button
         onClick={prev}
         className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center text-foreground opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-card"
@@ -89,7 +112,6 @@ const RoomImageSlider = ({ images, name }: { images: string[]; name: string }) =
         <ChevronRight size={16} />
       </button>
 
-      {/* Dots */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
         {images.map((_, i) => (
           <button
@@ -123,29 +145,18 @@ const Rooms = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {rooms.map((room) => (
             <div
               key={room.name}
               className="bg-card rounded-xl overflow-hidden border border-border hover:shadow-xl transition-all duration-300"
             >
-              {/* Image Slider */}
               <RoomImageSlider images={room.images} name={room.name} />
 
-              {/* Price badge */}
-              <div className="relative">
-                <div className="absolute -top-5 right-4 bg-card border border-border rounded-lg px-3 py-1.5 shadow-md">
-                  <span className="font-body text-sm font-bold text-foreground">{room.price}</span>
-                  <span className="font-body text-xs text-muted-foreground">/malam</span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 pt-4">
+              <div className="p-6">
                 <h3 className="font-heading text-xl text-foreground mb-2">{room.name}</h3>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">{room.desc}</p>
 
-                {/* Specs */}
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border">
                   <span className="flex items-center gap-1.5 text-xs font-body text-muted-foreground">
                     <Bed size={14} className="text-primary" /> {room.bed}
@@ -158,7 +169,6 @@ const Rooms = () => {
                   </span>
                 </div>
 
-                {/* Amenities */}
                 <div className="flex flex-wrap gap-1.5 mb-5">
                   {room.amenities.map((a) => (
                     <span
@@ -170,7 +180,6 @@ const Rooms = () => {
                   ))}
                 </div>
 
-                {/* CTA */}
                 <a
                   href="#contact"
                   className="inline-flex items-center gap-2 w-full justify-center bg-foreground text-background font-body font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"

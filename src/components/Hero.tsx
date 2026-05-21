@@ -49,12 +49,12 @@ const Hero = () => {
   const [guests, setGuests] = useState("2");
 
   const handleSearch = () => {
-    const baseUrl = "https://booking.sinergimax.com/widget";
+    const baseUrl = "https://booking.sinergimax.com/booking-page.php";
     const params = new URLSearchParams();
+    params.set("id", "AYRA HOTEL AIRPORT SOLO");
     if (checkIn) params.set("checkin", checkIn);
     if (checkOut) params.set("checkout", checkOut);
     if (guests) params.set("guests", guests);
-    params.set("pid", "PROPDE_01KG1JF9WSHBB920MFQJ8WC346");
     window.open(`${baseUrl}?${params.toString()}`, "_blank");
   };
 
