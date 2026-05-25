@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 const rooms = [
   {
     name: "Superior Twin",
-    images: [roomSuperior, roomSuperior2, roomSuperior3],
+    images: [superiorTwin],
     bed: "Twin Bed",
     guest: "2 Tamu",
     size: "22 m²",
@@ -41,7 +41,7 @@ const rooms = [
   },
   {
     name: "Executive Double",
-    images: [roomSuperior3, roomSuperior, roomSuperior2],
+    images: [executiveDouble],
     bed: "King Bed",
     guest: "2 Tamu",
     size: "32 m²",
@@ -50,7 +50,7 @@ const rooms = [
   },
   {
     name: "Junior Suites",
-    images: [roomSuite2, roomSuite3, roomSuite],
+    images: [juniorSuites],
     bed: "King Bed",
     guest: "2 Tamu",
     size: "38 m²",
@@ -59,7 +59,7 @@ const rooms = [
   },
   {
     name: "Suites Room",
-    images: [roomSuite, roomSuite3, roomSuite2],
+    images: [suitesRoom],
     bed: "King Bed",
     guest: "2 Tamu",
     size: "45 m²",
