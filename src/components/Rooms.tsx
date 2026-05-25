@@ -1,7 +1,4 @@
 import { useState } from "react";
-import roomDeluxe from "@/assets/room-deluxe.jpg";
-import roomDeluxe2 from "@/assets/room-deluxe-2.jpg";
-import roomDeluxe3 from "@/assets/room-deluxe-3.jpg";
 import roomSuperior from "@/assets/room-superior.jpg";
 import roomSuperior2 from "@/assets/room-superior-2.jpg";
 import roomSuperior3 from "@/assets/room-superior-3.jpg";
@@ -28,7 +25,7 @@ const rooms = [
   },
   {
     name: "Deluxe Double",
-    images: [roomDeluxe, roomDeluxe2, roomDeluxe3],
+    images: [deluxeTwin2, deluxeTwin3, deluxeTwin4, deluxeTwin5],
     bed: "Double Bed",
     guest: "2 Tamu",
     size: "26 m²",
@@ -37,7 +34,7 @@ const rooms = [
   },
   {
     name: "Deluxe Twin",
-    images: [deluxeTwin1, deluxeTwin2, deluxeTwin3, deluxeTwin4, deluxeTwin5],
+    images: [deluxeTwin1],
     bed: "Twin Bed",
     guest: "2 Tamu",
     size: "26 m²",

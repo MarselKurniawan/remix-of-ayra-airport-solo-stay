@@ -1,14 +1,12 @@
 import galleryLobby from "@/assets/gallery-lobby.jpg";
-import galleryRestaurant from "@/assets/gallery-restaurant.jpg";
-import galleryGym from "@/assets/gallery-gym.jpg";
 import galleryMeeting from "@/assets/gallery-meeting.jpg";
-import { Car, Coffee, Dumbbell, Shirt, ParkingCircle, ConciergeBell, ShowerHead, Tv, UtensilsCrossed, Crown } from "lucide-react";
+import heroResto from "@/assets/hero-resto.jpg";
+import { Car, Coffee, Shirt, ParkingCircle, ConciergeBell, ShowerHead, Tv, UtensilsCrossed, Crown } from "lucide-react";
 
 const facilities = [
-  { icon: UtensilsCrossed, name: "Riverside Resto", image: galleryRestaurant },
+  { icon: UtensilsCrossed, name: "Riverside Resto", image: heroResto },
   { icon: Crown, name: "Ballroom", image: galleryLobby },
   { icon: Tv, name: "Meeting Room", image: galleryMeeting },
-  { icon: Dumbbell, name: "Fitness Center", image: galleryGym },
 ];
 
 const facilityList = [
@@ -35,7 +33,7 @@ const Facilities = () => {
         </div>
 
         {/* Featured facilities with photos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
           {facilities.map((f) => (
             <div
               key={f.name}
