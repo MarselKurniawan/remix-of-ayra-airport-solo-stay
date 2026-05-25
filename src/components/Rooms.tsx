@@ -1,10 +1,8 @@
 import { useState } from "react";
-import roomSuperior from "@/assets/room-superior.jpg";
-import roomSuperior2 from "@/assets/room-superior-2.jpg";
-import roomSuperior3 from "@/assets/room-superior-3.jpg";
-import roomSuite from "@/assets/room-suite.jpg";
-import roomSuite2 from "@/assets/room-suite-2.jpg";
-import roomSuite3 from "@/assets/room-suite-3.jpg";
+import superiorTwin from "@/assets/superior-twin.webp";
+import executiveDouble from "@/assets/executive-double.webp";
+import juniorSuites from "@/assets/junior-suites.webp";
+import suitesRoom from "@/assets/suites-room.webp";
 import deluxeTwin1 from "@/assets/deluxe-twin-1.webp";
 import deluxeTwin2 from "@/assets/deluxe-twin-2.webp";
 import deluxeTwin3 from "@/assets/deluxe-twin-3.webp";
