@@ -1,12 +1,12 @@
-import galleryLobby from "@/assets/gallery-lobby.jpg";
-import galleryMeeting from "@/assets/gallery-meeting.jpg";
+import facilityBallroom from "@/assets/facility-ballroom.webp";
+import facilityMeeting from "@/assets/facility-meeting.webp";
 import heroResto from "@/assets/hero-resto.jpg";
 import { Car, Coffee, Shirt, ParkingCircle, ConciergeBell, ShowerHead, Tv, UtensilsCrossed, Crown } from "lucide-react";
 
 const facilities = [
   { icon: UtensilsCrossed, name: "Riverside Resto", image: heroResto },
-  { icon: Crown, name: "Ballroom", image: galleryLobby },
-  { icon: Tv, name: "Meeting Room", image: galleryMeeting },
+  { icon: Crown, name: "Ballroom", image: facilityBallroom },
+  { icon: Tv, name: "Meeting Room", image: facilityMeeting },
 ];
 
 const facilityList = [
