@@ -1,10 +1,8 @@
 import { useState } from "react";
-import roomSuperior from "@/assets/room-superior.jpg";
-import roomSuperior2 from "@/assets/room-superior-2.jpg";
-import roomSuperior3 from "@/assets/room-superior-3.jpg";
-import roomSuite from "@/assets/room-suite.jpg";
-import roomSuite2 from "@/assets/room-suite-2.jpg";
-import roomSuite3 from "@/assets/room-suite-3.jpg";
+import superiorTwin from "@/assets/superior-twin.webp";
+import executiveDouble from "@/assets/executive-double.webp";
+import juniorSuites from "@/assets/junior-suites.webp";
+import suitesRoom from "@/assets/suites-room.webp";
 import deluxeTwin1 from "@/assets/deluxe-twin-1.webp";
 import deluxeTwin2 from "@/assets/deluxe-twin-2.webp";
 import deluxeTwin3 from "@/assets/deluxe-twin-3.webp";
@@ -16,7 +14,7 @@ import { cn } from "@/lib/utils";
 const rooms = [
   {
     name: "Superior Twin",
-    images: [roomSuperior, roomSuperior2, roomSuperior3],
+    images: [superiorTwin],
     bed: "Twin Bed",
     guest: "2 Tamu",
     size: "22 m²",
@@ -43,7 +41,7 @@ const rooms = [
   },
   {
     name: "Executive Double",
-    images: [roomSuperior3, roomSuperior, roomSuperior2],
+    images: [executiveDouble],
     bed: "King Bed",
     guest: "2 Tamu",
     size: "32 m²",
@@ -52,7 +50,7 @@ const rooms = [
   },
   {
     name: "Junior Suites",
-    images: [roomSuite2, roomSuite3, roomSuite],
+    images: [juniorSuites],
     bed: "King Bed",
     guest: "2 Tamu",
     size: "38 m²",
@@ -61,7 +59,7 @@ const rooms = [
   },
   {
     name: "Suites Room",
-    images: [roomSuite, roomSuite3, roomSuite2],
+    images: [suitesRoom],
     bed: "King Bed",
     guest: "2 Tamu",
     size: "45 m²",
