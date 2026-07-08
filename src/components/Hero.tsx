@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, CalendarDays, Users, Search } from "lucide-react";
+import { ArrowDown, CalendarDays, Users, Search, User, Phone, MessageSquare } from "lucide-react";
 import heroImg from "@/assets/hero-hotel.jpg";
 import heroWedding from "@/assets/hero-wedding.jpg";
 import heroResto from "@/assets/hero-resto.jpg";
+import WhatsAppIcon from "./WhatsAppIcon";
+import { SALES, waLink } from "@/lib/contact";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { cn } from "@/lib/utils";
 
 const slides = [
   {
@@ -44,9 +48,19 @@ const slides = [
 ];
 
 const Hero = () => {
+  const { t } = useLanguage();
+  const [tab, setTab] = useState<"book" | "inquiry">("book");
+
+  // Booking state
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState("2");
+
+  // Inquiry state
+  const [iName, setIName] = useState("");
+  const [iPhone, setIPhone] = useState("");
+  const [iSubject, setISubject] = useState("room");
+  const [iMessage, setIMessage] = useState("");
 
   const handleSearch = () => {
     const baseUrl = "https://booking.sinergimax.com/booking-page.php";
@@ -58,6 +72,24 @@ const Hero = () => {
     window.open(`${baseUrl}?${params.toString()}`, "_blank");
   };
 
+  const subjectLabel = () => {
+    if (iSubject === "wedding") return t("hero.inq.subject.wedding");
+    if (iSubject === "meeting") return t("hero.inq.subject.meeting");
+    if (iSubject === "other") return t("hero.inq.subject.other");
+    return t("hero.inq.subject.room");
+  };
+
+  const handleInquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg =
+      `Halo ${SALES.name}, saya ingin mengirim inquiry untuk Ayra Airport Hotel Solo.\n\n` +
+      `Nama: ${iName || "-"}\n` +
+      `No. WhatsApp: ${iPhone || "-"}\n` +
+      `Subjek: ${subjectLabel()}\n` +
+      `Pesan: ${iMessage || "-"}`;
+    window.open(waLink(msg), "_blank");
+  };
+
   const today = new Date().toISOString().split("T")[0];
 
   const [current, setCurrent] = useState(0);
@@ -67,7 +99,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="hero" className="relative h-screen flex flex-col overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
       {slides.map((s, i) => (
         <img
           key={i}
@@ -84,7 +116,7 @@ const Hero = () => {
 
       <div className="relative z-10 pt-24" />
 
-      <div className="relative z-10 flex-1 flex items-center">
+      <div className="relative z-10 flex-1 flex items-center py-10">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl" key={current}>
             <p className="font-body text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-primary-foreground/70 mb-5 animate-fade-in">
@@ -112,82 +144,178 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Modern Booking Widget */}
-      <div className="relative z-10 container mx-auto px-4 pb-16">
+      {/* Booking / Inquiry Widget with tabs */}
+      <div className="relative z-10 container mx-auto px-4 pb-12">
         <div className="max-w-4xl">
-          <div className="bg-card/95 backdrop-blur-md rounded-2xl shadow-2xl p-2">
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto_auto] gap-2">
-              {/* Check In */}
-              <div className="relative group">
-                <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
-                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
-                    Check In
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <CalendarDays size={16} className="text-primary shrink-0" />
-                    <input
-                      type="date"
-                      value={checkIn}
-                      min={today}
-                      onChange={(e) => setCheckIn(e.target.value)}
-                      className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Check Out */}
-              <div className="relative group">
-                <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
-                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
-                    Check Out
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <CalendarDays size={16} className="text-primary shrink-0" />
-                    <input
-                      type="date"
-                      value={checkOut}
-                      min={checkIn || today}
-                      onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Guests */}
-              <div className="relative group">
-                <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
-                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
-                    Tamu
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <Users size={16} className="text-primary shrink-0" />
-                    <select
-                      value={guests}
-                      onChange={(e) => setGuests(e.target.value)}
-                      className="bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer appearance-none pr-4"
-                    >
-                      {[1, 2, 3, 4, 5, 6].map((n) => (
-                        <option key={n} value={n}>
-                          {n} {n === 1 ? "Tamu" : "Tamu"}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Search Button */}
-              <button
-                onClick={handleSearch}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-3 font-body text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
-              >
-                <Search size={18} />
-                <span className="hidden md:inline">Cari</span>
-              </button>
-            </div>
+          {/* Tabs */}
+          <div className="flex gap-1 mb-2">
+            <button
+              onClick={() => setTab("book")}
+              className={cn(
+                "px-5 py-2 rounded-t-lg font-body text-xs font-semibold uppercase tracking-wider transition-colors",
+                tab === "book"
+                  ? "bg-card/95 text-foreground"
+                  : "bg-foreground/40 text-primary-foreground/80 hover:bg-foreground/60"
+              )}
+            >
+              {t("hero.tab.book")}
+            </button>
+            <button
+              onClick={() => setTab("inquiry")}
+              className={cn(
+                "px-5 py-2 rounded-t-lg font-body text-xs font-semibold uppercase tracking-wider transition-colors",
+                tab === "inquiry"
+                  ? "bg-card/95 text-foreground"
+                  : "bg-foreground/40 text-primary-foreground/80 hover:bg-foreground/60"
+              )}
+            >
+              {t("hero.tab.inquiry")}
+            </button>
           </div>
+
+          {tab === "book" ? (
+            <div className="bg-card/95 backdrop-blur-md rounded-2xl rounded-tl-none shadow-2xl p-2">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto_auto] gap-2">
+                <div className="relative group">
+                  <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
+                    <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                      {t("hero.checkin")}
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <CalendarDays size={16} className="text-primary shrink-0" />
+                      <input
+                        type="date"
+                        value={checkIn}
+                        min={today}
+                        onChange={(e) => setCheckIn(e.target.value)}
+                        className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="relative group">
+                  <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
+                    <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                      {t("hero.checkout")}
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <CalendarDays size={16} className="text-primary shrink-0" />
+                      <input
+                        type="date"
+                        value={checkOut}
+                        min={checkIn || today}
+                        onChange={(e) => setCheckOut(e.target.value)}
+                        className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="relative group">
+                  <div className="bg-muted/50 rounded-xl px-4 py-3 transition-colors group-hover:bg-muted/80">
+                    <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                      {t("hero.guests")}
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <Users size={16} className="text-primary shrink-0" />
+                      <select
+                        value={guests}
+                        onChange={(e) => setGuests(e.target.value)}
+                        className="bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer appearance-none pr-4"
+                      >
+                        {[1, 2, 3, 4, 5, 6].map((n) => (
+                          <option key={n} value={n}>{n}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleSearch}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-3 font-body text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
+                >
+                  <Search size={18} />
+                  <span className="hidden md:inline">{t("hero.search")}</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <form
+              onSubmit={handleInquiry}
+              className="bg-card/95 backdrop-blur-md rounded-2xl rounded-tl-none shadow-2xl p-4"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+                <div className="bg-muted/50 rounded-xl px-4 py-3">
+                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                    {t("hero.inq.name")}
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <User size={16} className="text-primary shrink-0" />
+                    <input
+                      required
+                      value={iName}
+                      onChange={(e) => setIName(e.target.value)}
+                      className="w-full bg-transparent font-body text-sm text-card-foreground outline-none placeholder:text-muted-foreground/60"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                </div>
+                <div className="bg-muted/50 rounded-xl px-4 py-3">
+                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                    {t("hero.inq.phone")}
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <Phone size={16} className="text-primary shrink-0" />
+                    <input
+                      required
+                      type="tel"
+                      value={iPhone}
+                      onChange={(e) => setIPhone(e.target.value)}
+                      className="w-full bg-transparent font-body text-sm text-card-foreground outline-none placeholder:text-muted-foreground/60"
+                      placeholder="0812xxxx"
+                    />
+                  </div>
+                </div>
+                <div className="bg-muted/50 rounded-xl px-4 py-3">
+                  <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                    {t("hero.inq.subject")}
+                  </label>
+                  <select
+                    value={iSubject}
+                    onChange={(e) => setISubject(e.target.value)}
+                    className="w-full bg-transparent font-body text-sm text-card-foreground outline-none cursor-pointer"
+                  >
+                    <option value="room">{t("hero.inq.subject.room")}</option>
+                    <option value="wedding">{t("hero.inq.subject.wedding")}</option>
+                    <option value="meeting">{t("hero.inq.subject.meeting")}</option>
+                    <option value="other">{t("hero.inq.subject.other")}</option>
+                  </select>
+                </div>
+              </div>
+              <div className="bg-muted/50 rounded-xl px-4 py-3 mb-2">
+                <label className="font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-muted-foreground block mb-1">
+                  {t("hero.inq.message")}
+                </label>
+                <div className="flex items-start gap-2">
+                  <MessageSquare size={16} className="text-primary shrink-0 mt-1" />
+                  <textarea
+                    required
+                    value={iMessage}
+                    onChange={(e) => setIMessage(e.target.value)}
+                    rows={2}
+                    className="w-full bg-transparent font-body text-sm text-card-foreground outline-none resize-none placeholder:text-muted-foreground/60"
+                    placeholder="..."
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-[#25D366] hover:bg-[#1ebe57] text-white rounded-xl px-6 py-3 font-body text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all hover:shadow-lg active:scale-[0.98]"
+              >
+                <WhatsAppIcon size={18} />
+                {t("hero.inq.send")}
+              </button>
+            </form>
+          )}
         </div>
       </div>
 
